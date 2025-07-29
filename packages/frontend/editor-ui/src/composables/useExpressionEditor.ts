@@ -55,7 +55,7 @@ export const useExpressionEditor = ({
 }: {
 	editorRef: MaybeRefOrGetter<HTMLElement | undefined>;
 	editorValue?: MaybeRefOrGetter<string>;
-	targetNodeParameterContext?: MaybeRefOrGetter<TargetNodeParameterContext>;
+	targetNodeParameterContext?: MaybeRefOrGetter<TargetNodeParameterContext | undefined>;
 	extensions?: MaybeRefOrGetter<Extension[]>;
 	additionalData?: MaybeRefOrGetter<IDataObject>;
 	skipSegments?: MaybeRefOrGetter<string[]>;
@@ -232,7 +232,7 @@ export const useExpressionEditor = ({
 		if (editor.value) {
 			editor.value.destroy();
 		}
-		editor.value = new EditorView({ parent, state });
+		editor.value = new EditorView({ parent, state, root: document });
 		debouncedUpdateSegments();
 	});
 
