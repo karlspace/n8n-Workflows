@@ -43,9 +43,9 @@ type EndpointGroup =
 	| 'ai'
 	| 'folder'
 	| 'insights'
-	| 'data-store';
+	| 'data-stores';
 
-type ModuleName = 'insights' | 'external-secrets' | 'data-store';
+type ModuleName = 'insights' | 'external-secrets' | 'data-stores';
 
 export interface SetupProps {
 	endpointGroups?: EndpointGroup[];

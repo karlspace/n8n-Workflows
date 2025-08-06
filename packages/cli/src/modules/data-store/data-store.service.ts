@@ -26,7 +26,7 @@ export class DataStoreService {
 		private readonly dataStoreRowsRepository: DataStoreRowsRepository,
 		private readonly logger: Logger,
 	) {
-		this.logger = this.logger.scoped('data-store');
+		this.logger = this.logger.scoped('data-stores');
 	}
 
 	async start() {}

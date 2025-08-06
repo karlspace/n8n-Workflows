@@ -3,7 +3,7 @@ import { BackendModule, OnShutdown } from '@n8n/decorators';
 import { Container } from '@n8n/di';
 import { BaseEntity } from '@n8n/typeorm';
 
-@BackendModule({ name: 'data-store' })
+@BackendModule({ name: 'data-stores' })
 export class DataStoreModule implements ModuleInterface {
 	async init() {
 		await import('./data-store.controller');
@@ -23,11 +23,6 @@ export class DataStoreModule implements ModuleInterface {
 
 		const { DataStoreSharedService } = await import('./data-store-shared.service');
 		await Container.get(DataStoreSharedService).start();
-	}
-
-	// Default modules aren't loaded without a settings() function
-	async settings() {
-		return {};
 	}
 
 	async entities() {

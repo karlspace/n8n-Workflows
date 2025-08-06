@@ -9,7 +9,7 @@ import { DataStoreService } from '../data-store.service';
 import { toTableName } from '../utils/sql-utils';
 
 beforeAll(async () => {
-	await testModules.loadModules(['data-store']);
+	await testModules.loadModules(['data-stores']);
 	await testDb.init();
 });
 

@@ -4,6 +4,7 @@ import { User } from '@n8n/db';
 import { Service } from '@n8n/di';
 
 import { DataStoreRepository } from './data-store.repository';
+
 import { ProjectService } from '@/services/project.service.ee';
 
 @Service()
@@ -13,7 +14,7 @@ export class DataStoreSharedService {
 		private readonly projectService: ProjectService,
 		private readonly logger: Logger,
 	) {
-		this.logger = this.logger.scoped('data-store');
+		this.logger = this.logger.scoped('data-stores');
 	}
 	async start() {}
 	async shutdown() {}
