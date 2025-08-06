@@ -49,19 +49,52 @@ function completionToTooltip(
 		above: true,
 		create: () => {
 			const element = document.createElement('div');
-			element.classList.add('cm-cursorInfo');
+			const tooltip = document.createElement('div');
+			tooltip.classList.add('cm-cursorInfo');
+			tooltip.classList.add('cm-tooltip');
+			element.appendChild(tooltip);
 			const info = completion.info;
 			if (typeof info === 'string') {
-				element.textContent = info;
+				tooltip.textContent = info;
 			} else if (isInfoBoxRenderer(info)) {
 				const infoResult = info(completion, options.argIndex ?? -1);
 
 				if (infoResult) {
-					element.appendChild(infoResult);
+					tooltip.appendChild(infoResult);
 				}
 			}
 
-			return { dom: element };
+			const placeholder = document.createElement('div');
+
+			tooltip.style.position = 'absolute';
+			tooltip.style.bottom = '0';
+			tooltip.style.minWidth = '280px';
+
+			document.body.appendChild(element);
+
+			// Synchronize position
+			const updatePosition = () => {
+				const rect = placeholder.getBoundingClientRect();
+				element.style.position = 'absolute';
+				element.style.left = `${rect.left}px`;
+				element.style.top = `${rect.top}px`;
+				element.style.zIndex = '100000';
+			};
+
+			// Initial position sync
+			requestAnimationFrame(updatePosition);
+
+			// Use ResizeObserver to keep positions synchronized
+			const resizeObserver = new ResizeObserver(updatePosition);
+			resizeObserver.observe(placeholder);
+
+			return {
+				dom: placeholder,
+				destroy: () => {
+					resizeObserver.disconnect();
+					document.body.removeChild(element);
+				},
+			};
 		},
 	};
 }
